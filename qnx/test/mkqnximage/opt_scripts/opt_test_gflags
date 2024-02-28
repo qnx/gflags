@@ -1,0 +1,79 @@
+#!/bin/bash
+
+. ${TOOL_DIR}/functions
+
+function brief()
+{
+    echo "--test-gflags=[no|<path>]"
+}
+
+function help()
+{
+    brief
+    cat <<EOF
+    If this option is given with a <path> to the gflags source tree, the full tree will be imported
+    on the target under /data/gflags from which you can execute the gflags test suite using:
+
+    cd /data/gflags/qnx/test
+    ./qnxtest.sh
+
+    NOTE: You must compile the gflags source tree of the desired target before building
+    the vm image.
+
+    The default is no.
+EOF
+}
+
+function validate() {
+
+	if [ ${OPT_TEST_GFLAGS} != "no" ]; then
+		if [ ! -d "${OPT_TEST_GFLAGS}" ]; then
+			echo "Invalid gflags source tree '${OPT_TEST_GFLAGS}'"
+			exit 1;
+		fi
+	else
+		exit 0;
+	fi
+}
+
+function configure()
+{
+	rm -f output/option_files/*.OPT_TEST_GFLAGS
+	if [ "$OPT_TEST_GFLAGS" != no ]; then
+		if [ "${OPT_VERBOSE}" == "yes" ]; then
+			echo "Building gflags file list from ${OPT_TEST_GFLAGS}"
+		fi
+
+		for f in $(find ${OPT_TEST_GFLAGS} -type f); do
+			echo "[perms=0755] gflags/${f#${OPT_TEST_GFLAGS}/}=${f}" >> output/option_files/data_files.OPT_TEST_GFLAGS
+		done;
+
+		case ${OPT_ARCH} in
+		x86*)
+			gflags_TEST_PREFIX="nto-${OPT_ARCH}-o";
+			;;
+		*aarch64*)
+			gflags_TEST_PREFIX="nto-aarch64-le";
+			;;
+		esac
+
+		# export gflags options"
+		echo "gflags_TEST_PREFIX=${gflags_TEST_PREFIX}" >> output/option_files/ifs_env.OPT_TEST_GFLAGS
+
+	fi
+
+	exit 0
+}
+
+case "$1" in
+	brief)
+		brief;;
+	help)
+		help;;
+	validate)
+		validate;;
+	configure)
+		configure;;
+	default)
+		echo no;;
+esac

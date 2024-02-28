@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shiplist>
+	<id>com.qnx.${baselineId}.osr.gflags_tests.internal</id>
+	<name>gflags 2.2.2 Library Tests</name>
+	<description>gflags - C++ commandline flags processing library Tests</description>
+	<property key="f.support" value="Custom"/>
+	<property key="f.swtype" value="III"/>
+	<property key="f.engage" value="B"/>
+	<category>OSR</category>
+	<property key="com.qnx.internal" value="true"/>
+	<!-- don't generate provides/requires tags for internal packages-->
+	<requires value="suppress-library: autogen"/>
+	<provides value="suppress-library: autogen"/>
+	<asset dest="${targetfolder}/[ARCH]/usr/bin/gflags_tests" />
+</shiplist>

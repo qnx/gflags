@@ -1,0 +1,23 @@
+<shiplist>
+	<id>com.qnx.${baselineId}.osr.gflags.internal</id>
+	<name>gflags 2.2.2 Library</name>
+	<description>gflags - C++ commandline flags processing library</description>
+	<property key="f.support" value="Custom"/>
+	<property key="f.swtype" value="III"/>
+	<property key="f.engage" value="B"/>
+	<category>OSR</category>
+
+	<property key="com.qnx.internal" value="true"/>
+	<!-- don't generate provides/requires tags for internal packages-->
+	<requires value="suppress-library: autogen"/>
+	<provides value="suppress-library: autogen"/>
+
+	<file name="${targetfolder}/[ARCH]/usr/lib/libgflags.so.2.2.2" />
+	<file name="${targetfolder}/[ARCH]/usr/lib/libgflags.so.2.2" />
+	<file name="${targetfolder}/[ARCH]/usr/lib/libgflags.so" />
+	<file name="${targetfolder}/[ARCH]/usr/lib/libgflags_nothreads.so.2.2.2" />
+	<file name="${targetfolder}/[ARCH]/usr/lib/libgflags_nothreads.so.2.2" />
+	<file name="${targetfolder}/[ARCH]/usr/lib/libgflags_nothreads.so" />
+	<file name="${targetfolder}/[ARCH]/usr/bin/gflags_completions.sh" />
+	<asset dest="${targetfolder}/usr/include/gflags/" />
+</shiplist>
